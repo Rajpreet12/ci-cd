@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+  build:
+    commands:
+      - echo 'Building Lambda function...'
+      - zip -r lambda_function.zip lambda_function.py
+  post_build:
+    commands:
+      - echo 'Updating Lambda function...'
+      - aws lambda update-function-code --function-name MyDemoLambda --zip-file fileb://lambda_function.zip
+      - echo 'Publishing new Lambda version...'
+      - aws lambda publish-version --function-name MyDemoLambda
+
+artifacts:
+  files: lambda_function.zip
+
