@@ -12,9 +12,8 @@ phases:
     commands:
       - echo 'Updating Lambda function...'
       - aws lambda update-function-code --function-name MyDemoLambda --zip-file fileb://lambda_function.zip
+      - echo 'Waiting for 30 seconds before publishing version...'
+      - sleep 30  # Add a delay to ensure update completes
       - echo 'Publishing new Lambda version...'
       - aws lambda publish-version --function-name MyDemoLambda
-
-artifacts:
-  files: lambda_function.zip
 
